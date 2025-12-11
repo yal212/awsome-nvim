@@ -29,6 +29,7 @@ __pycache__/
 *.luac
 lazy-lock.json
 lazy-lock.*.json
+*.luarc.json
 
 # General
 tags
