@@ -1,5 +1,7 @@
 vim.g.mapleader = " "
 
+vim.keymap.set("n", "gC", "gcc")
+
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- move lines
@@ -28,7 +30,8 @@ vim.keymap.set("n", "<leader>Y", '"+Y')
 vim.keymap.set("n", "Q", "<nop>")
 
 -- project swap
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+-- haven't really figured it out yet
+-- vim.keymap.set("n", "<C-p>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 -- window
 vim.keymap.set("n", "<leader>w", "<C-w>")

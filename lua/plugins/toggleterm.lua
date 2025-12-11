@@ -3,10 +3,10 @@ return {
 	version = "*",
 	config = function()
 		require("toggleterm").setup({
-			size = 5,
-			open_mapping = [[<leader>t]],
+			size = 30,
+			open_mapping = [[<C-t>]],
 			shading_factor = 2,
-			direction = "horizontal",
+			direction = "vertical",
 			close_on_exit = true,
 			shell = vim.o.shell,
 		})

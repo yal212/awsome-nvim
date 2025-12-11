@@ -1,3 +1,6 @@
+
+```gitignore
+// ...existing code...
 .DS_Store
 
 # Swap / temporary files
@@ -29,3 +32,12 @@ lazy-lock.*.json
 
 # General
 tags
+
+# Neovim local state and cache (when this repo is used as ~/.config/nvim)
+.local/share/nvim/
+.local/state/nvim/
+.cache/nvim/
+session.vim
+
+# lazy.nvim runtime and plugin folders (if accidentally placed in repo)
+lazy/

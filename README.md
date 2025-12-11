@@ -1,10 +1,11 @@
-# awsome-nvim
+# awesome-nvim
 
 My personal Neovim configuration using lazy.nvim for plugin management.
 
 Requirements
-- Neovim 0.8+ (0.9 recommended)
+- Neovim 0.8+ (0.9+ recommended)
 - Git
+- Optional but recommended: ripgrep (rg), fd, a C/C++ toolchain for building native plugins
 
 Installation
 
@@ -15,16 +16,4 @@ Clone this repository into your Neovim config directory:
 mv ~/.config/nvim ~/.config/nvim.backup 2>/dev/null || true
 
 # clone repo
-git clone https://github.com/<your-username>/awsome-nvim.git ~/.config/nvim
-```
-
-Start Neovim; `lazy.nvim` is bootstrapped in `init.lua`. To install or update plugins run inside Neovim:
-
-:Lazy sync
-
-Repository layout
-- `init.lua` — entrypoint (bootstraps lazy.nvim)
-- `lua/` — Lua modules and plugin configs
-
-Contributing
-Feel free to open issues or PRs. Keep changes small and documented.
+git clone https://github.com/yal212/awsome-nvim.git ~/.config/nvim
