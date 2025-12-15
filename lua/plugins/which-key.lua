@@ -38,10 +38,15 @@ return {
       -- harpoon
 			h = { desc = "harpoon" },
 			a = { desc = "add to harpoon" },
-			["1"] = { desc = "harpoon 1" },
-			["2"] = { desc = "harpoon 2" },
-			["3"] = { desc = "harpoon 3" },
-			["4"] = { desc = "harpoon 4" },
+			["1"] = { desc = "harpoon 1", hidden = true},
+			["2"] = { desc = "harpoon 2", hidden = true},
+			["3"] = { desc = "harpoon 3", hidden = true},
+			["4"] = { desc = "harpoon 4", hidden = true},
+			["5"] = { desc = "harpoon 5", hidden = true},
+			["6"] = { desc = "harpoon 6", hidden = true},
+			["7"] = { desc = "harpoon 7", hidden = true},
+			["8"] = { desc = "harpoon 8", hidden = true},
+			["9"] = { desc = "harpoon 9", hidden = true},
       -- telescope
 			f = { desc = "telescope" },
 			ff = { desc = "find file" },
@@ -70,10 +75,18 @@ return {
       o = { desc = "oil" },
       -- trouble
       x = { desc = "trouble" },
+      -- vim-be-good
+      vg = { desc = "vim-be-good"},
+      -- ai
+      i = { desc = "ai" },
+      -- toggle
+      t = { desc = "toggle" },
       -- hiddens
 			y = { hidden = true },
+      d = { hidden = true },
 			Y = { hidden = true },
 			w = { hidden = true },
+			s = { hidden = true },
 		}, { prefix = "<leader>" })
 
 		-- :checkhealth which-key

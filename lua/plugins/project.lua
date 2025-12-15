@@ -1,68 +1,63 @@
 return {
   {
     "ahmedkhalf/project.nvim",
-    event = "VeryLazy",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-tree/nvim-tree.lua" },
+    -- event = "VeryLazy",
+    dependencies = {
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-tree.lua",
+    },
     opts = {
-      manual_mode = false,
-      detection_methods = { "lsp", "pattern" },
-      patterns = {
-        ".git",
-        ".gitignore",
-        "README.md",
-        "LICENSE.md",
-        "pyproject.toml",
-        "Makefile",
-        "build.gradle",
-        "requirements.txt",
-        "package.json",
-      },
+      manual_mode = true,        -- Only manual projects
+      -- edit in ~/.local/share/nvim/project_nvim/project_history
       show_hidden = true,
+      silent_chdir = true,
     },
     config = function(_, opts)
       local project = require("project_nvim")
       project.setup(opts)
 
-      -- Setup nvim-tree before using API
+      -- nvim-tree config
       local ok, nvim_tree = pcall(require, "nvim-tree")
       if ok then
         nvim_tree.setup({
-          update_focused_file = { enable = true },
+          update_focused_file = {
+            enable = true,
+            update_root = false,
+          },
           view = { width = 30, side = "left" },
+          hijack_directories = { enable = false },
         })
       end
 
-      -- Load telescope project extension
+      -- Load telescope extension
       require("telescope").load_extension("projects")
 
-      -- Update nvim-tree root when switching projects
+      -- Update tree root on project change
       project.on_project_changed = function()
         local ok, api = pcall(require, "nvim-tree.api")
-        if ok then
-          api.tree.change_root(project.get_project_root())
-        end
+        if ok then api.tree.change_root(project.get_project_root()) end
       end
 
-      -- Keymap to open Telescope project picker
+      -- Telescope picker keymap
       vim.keymap.set("n", "<leader>fp", function()
-        require("telescope").extensions.projects.projects({
-          attach_mappings = function(prompt_bufnr, map)
-            local actions = require("telescope.actions")
-            local action_state = require("telescope.actions.state")
+        local telescope = require("telescope")
+        local actions = require("telescope.actions")
+        local action_state = require("telescope.actions.state")
 
+        telescope.extensions.projects.projects({
+          attach_mappings = function(prompt_bufnr, map)
             local function open_project()
-              local selection = action_state.get_selected_entry()
+              local entry = action_state.get_selected_entry()
               actions.close(prompt_bufnr)
-              if selection then
-                local path = selection.path or selection.value or selection.cwd
-                if path then
-                  vim.cmd("cd " .. path)
-                  local ok, api = pcall(require, "nvim-tree.api")
-                  if ok then
-                    api.tree.change_root(path)
-                  end
-                end
-              end
+              if not entry then return end
+
+              local path = entry.cwd or entry.value or entry.path
+              if not path then return end
+
+              vim.api.nvim_set_current_dir(path)
+
+              local ok, api = pcall(require, "nvim-tree.api")
+              if ok then api.tree.change_root(path) end
             end
 
             map("i", "<CR>", open_project)

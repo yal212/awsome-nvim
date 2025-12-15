@@ -14,17 +14,39 @@ end
 return {
   "CRAG666/code_runner.nvim",
   config = function()
+    local project_nvim = require("project_nvim.project")
+
     require("code_runner").setup({
       mode = "term",
       focus = true,
       startinsert = false,
+
+      -- ⭐ AUTO PROJECT DETECTION ⭐
+      project = {
+        ["*"] = function()
+          local cwd = project_nvim.get_project_root() or vim.loop.cwd()
+          local ft = vim.bo.filetype
+
+          local commands = {
+            cpp = "cd " .. cwd .. " && g++ *.cpp -std=c++20 -O2 -o project && ./project",
+            python = "python3 " .. cwd .. "/main.py",
+            java = "cd " .. cwd .. " && javac Main.java && java Main",
+          }
+
+          return {
+            name = vim.fn.fnamemodify(cwd, ":t"),
+            command = commands[ft],
+            dir = cwd,
+          }
+        end,
+      },
+
       float = {
         border = "rounded",
         width = 0.8,
         height = 0.6,
         border_hl = "FloatBorder",
-        x = 0.5,
-        y = 0.5,
+        x = 0.5, y = 0.5,
       },
 
       filetype = {
@@ -37,6 +59,7 @@ return {
       hot_reload = false,
     })
 
+    -- Keymaps
     local keymap = vim.keymap.set
     keymap('n', '<leader>rr', ':RunCode<CR>')
     keymap('n', '<leader>rf', ':RunFile<CR>')
